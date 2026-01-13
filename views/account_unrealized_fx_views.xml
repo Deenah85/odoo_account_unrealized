@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Wizard form view -->
+    <record id="view_account_unrealized_fx_wizard_form" model="ir.ui.view">
+        <field name="name">account.unrealized.fx.wizard.form</field>
+        <field name="model">account.unrealized.fx.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Unrealized Currency Gains/Losses" create="0" edit="0">
+                <sheet>
+                    <group>
+                        <field name="company_id"/>
+                        <field name="date"/>
+                    </group>
+                    <group>
+                        <field name="account_scope"/>
+                        <field name="include_unposted"/>
+                        <field name="total_adjustment" readonly="1"/>
+                    </group>
+                    <notebook>
+                        <page string="Lines">
+                            <field name="line_ids">
+                                <list>
+                                    <field name="move_id"/>
+                                    <field name="move_line_id"/>
+                                    <field name="partner_id"/>
+                                    <field name="account_id"/>
+                                    <field name="date"/>
+                                    <field name="maturity_date"/>
+                                    <field name="currency_id"/>
+                                    <field name="amount_currency"/>
+                                    <field name="balance_operation"/>
+                                    <field name="balance_current"/>
+                                    <field name="adjustment"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                    <footer>
+                        <button name="action_compute_lines"
+                                string="Compute"
+                                type="object"
+                                class="btn-primary"/>
+                        <button string="Close"
+                                special="cancel"
+                                class="btn-secondary"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action to open the wizard -->
+    <record id="action_account_unrealized_fx_wizard" model="ir.actions.act_window">
+        <field name="name">Unrealized Currency Gains/Losses</field>
+        <field name="res_model">account.unrealized.fx.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <!-- Menu item under Accounting / Reporting -->
+    <menuitem id="menu_account_unrealized_fx_report"
+              name="Unrealized Currency Gains/Losses"
+              parent="account.menu_finance_reports"
+              action="action_account_unrealized_fx_wizard"
+              sequence="60"
+              groups="account.group_account_manager"/>
+</odoo>
